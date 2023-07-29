@@ -6,4 +6,6 @@ urlpatterns = [
     path('pengadaan/', views.pengadaan),
     path('pengadaan/<int:pk>/', views.pengadaan_detail),
     path('pengadaan/search/', views.search, name='search'),
+    path('keuangan/', views.keuangan),
+    path('pengawasan/', views.pengawasan),
 ]

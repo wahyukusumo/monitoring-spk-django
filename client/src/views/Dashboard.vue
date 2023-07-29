@@ -5,21 +5,21 @@
       <div class="w-60">
         <Pie id="my-chart-id" :options="chartOptions" :data="chartsData[0]" />
       </div>
-      <DashboardTable :theads="['Terbayar', 'Terkontrak']" :tbodies="['Rp.50.000.000', 'Rp.70.000.000']" />
+      <DashboardTable :theads="['Terkontrak', 'Terbayar']" :tbodies="['Rp.70.000.000', 'Rp.50.000.000']" />
     </div>
     <div class="flex flex-col items-center justify-center rounded bg-gray-50 dark:bg-gray-800 p-5">
       <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Basket Efisiensi</h5>
       <div class="w-60">
         <Pie id="my-chart-id" :options="chartOptions" :data="chartsData[1]" />
       </div>
-      <DashboardTable :theads="['Terbayar', 'Terkontrak']" :tbodies="['Rp.12.000.000', 'Rp.40.000.000']" />
+      <DashboardTable :theads="['Terkontrak', 'Terbayar']" :tbodies="['Rp.40.000.000', 'Rp.12.000.000']" />
     </div>
     <div class="flex flex-col items-center justify-center rounded bg-gray-50 dark:bg-gray-800 p-5">
       <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Basket Pemasaran</h5>
       <div class="w-60">
         <Pie id="my-chart-id" :options="chartOptions" :data="chartsData[2]" />
       </div>
-      <DashboardTable :theads="['Terbayar', 'Terkontrak']" :tbodies="['Rp.20.000.000', 'Rp.40.000.000']" />
+      <DashboardTable :theads="['Terkontrak', 'Terbayar']" :tbodies="['Rp.40.000.000', 'Rp.20.000.000']" />
     </div>
   </div>
   <div class="flex flex-col items-center justify-center h-96 mb-4 rounded bg-gray-50 dark:bg-gray-800">
@@ -131,22 +131,10 @@ export default {
               label: 'Kumulatif',
               data: [10000000, 34000000, 50000000, 65000000, 80000000, 124000000, 220000000, 230000000, 255000000, 260000000, 300000000, 310000000],
               backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(255, 159, 64, 0.2)',
-                'rgba(255, 205, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(201, 203, 207, 0.2)'
+                'rgba(153, 102, 255, 0.2)'
               ],
               borderColor: [
-                'rgb(255, 99, 132)',
-                'rgb(255, 159, 64)',
-                'rgb(255, 205, 86)',
-                'rgb(75, 192, 192)',
-                'rgb(54, 162, 235)',
-                'rgb(153, 102, 255)',
-                'rgb(201, 203, 207)'
+                'rgb(153, 102, 255)'
               ],
               borderWidth: 1,
             },
@@ -154,21 +142,9 @@ export default {
               label: 'Terbayar',
               data: [50000000, 20000000, 30000000, 55000000, 10000000, 11000000, 180000000, 190000000, 250000000, 220000000, 150000000, 300000000],
               backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(255, 159, 64, 0.2)',
-                'rgba(255, 205, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
                 'rgba(201, 203, 207, 0.2)'
               ],
               borderColor: [
-                'rgb(255, 99, 132)',
-                'rgb(255, 159, 64)',
-                'rgb(255, 205, 86)',
-                'rgb(75, 192, 192)',
-                'rgb(54, 162, 235)',
-                'rgb(153, 102, 255)',
                 'rgb(201, 203, 207)'
               ],
               borderWidth: 1,

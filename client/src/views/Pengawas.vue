@@ -61,48 +61,29 @@
           </td>
           <td class="px-6 py-4">
             <!-- Add modal -->
-            <FormModal modal-title="Approve Contract" button-text="Approve">
+            <FormModal modal-title="Add Progress" button-text="Add Progress">
               <template v-slot:body>
-                <form v-on:submit.prevent="updateContract(contract)">
+                <form v-on:submit.prevent="submitForm(contract)">
                   <TextInput :label="'Nomor SPK'">
                     <input type="text" name="no_spk" id="no_spk" v-model="contract.nomor_spk" :class="textInputClass"
-                      placeholder=" " disabled />
+                      placeholder=" " required disabled />
                   </TextInput>
-                  <TextInput :label="'Vendor'">
-                    <input type="text" name="vendor" id="vendor" v-model="contract.vendor" :class="textInputClass"
-                      placeholder=" " disabled />
-                  </TextInput>
-                  <TextInput :label="'Tanggal Mulai'">
-                    <input type="date" name="tanggal_mulai" id="tanggal_mulai" v-model="contract.tanggal_mulai"
-                      :class="textInputClass" placeholder=" " disabled />
-                  </TextInput>
-                  <TextInput :label="'Tanggal Akhir'">
-                    <input type="date" name="tanggal_akhir" id="tanggal_akhir" v-model="contract.tanggal_akhir"
-                      :class="textInputClass" placeholder=" " disabled />
-                  </TextInput>
-                  <TextInput :label="'Uraian'">
-                    <input type="text" name="uraian" id="uraian" v-model="contract.uraian" :class="textInputClass"
-                      placeholder=" " disabled />
+                  <TextInput :label="'Pembayaran'">
+                    <input type="text" name="pembayaran" id="pembayaran" v-model="addPayment.pembayaran"
+                      :class="textInputClass" placeholder=" " required />
                   </TextInput>
                   <TextInput :label="'Nilai'">
-                    <input type="text" name="nilai" id="nilai" v-model="contract.nilai" :class="textInputClass" placeholder=" "
-                      disabled />
+                    <input type="number" name="nilai" id="nilai" v-model="addPayment.nilai" :class="textInputClass"
+                      placeholder=" " required />
                   </TextInput>
-                  <TextInput :label="'Basket'">
-                    <input type="text" name="basket" id="basket" v-model="contract.basket" :class="textInputClass"
-                      placeholder=" " disabled />
+                  <TextInput :label="'Tanggal Pembayaran'">
+                    <input type="date" name="tanggal_pembayaran" id="tanggal_pembayaran"
+                      v-model="addPayment.tanggal_pembayaran" :class="textInputClass" placeholder=" " required />
                   </TextInput>
-
-                  <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-500">
-
-                  <div class="relative z-0 w-full mb-6 group">
-                    <label for="bagian" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Pilih Bagian</label>
-                    <select id="bagian" v-model="this.bagian" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                      <option>Jaringan</option>
-                      <option>Konstruksi</option>
-                      <option>Transaksi Energi</option>
-                    </select>
-                  </div>
+                  <TextInput :label="'Keterangan'">
+                    <input type="text" name="keterangan" id="keterangan" v-model="addPayment.keterangan"
+                      :class="textInputClass" placeholder=" " required />
+                  </TextInput>
                   <div>
                     <button type="submit"
                       class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
@@ -136,7 +117,12 @@ export default {
   data() {
     return {
       contracts: [''],
-      bagian: '',
+      addPayment: {
+        pembayaran: '',
+        nilai: undefined,
+        tanggal_pembayaran: undefined,
+        keterangan: ''
+      },
       textInputClass: 'block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer'
     }
   },
@@ -154,27 +140,23 @@ export default {
         console.log(error);
       }
     },
-    async updateContract(contract) {
+    async submitForm(contract) {
       try {
-        // Send a request to API to update the contract
-        const response = await axios.put(`http://127.0.0.1:8000/api/pengadaan/${contract.id}/`, {
-          bagian: this.bagian
+        // Send a POST request to the API
+        const response = await axios.post('http://127.0.0.1:8000/api/keuangan/', {
+          nomor_spk_id: contract.id,
+          pembayaran: this.addPayment.pembayaran,
+          nilai: this.addPayment.nilai,
+          tanggal_pembayaran: this.addPayment.tanggal_pembayaran,
+          keterangan: this.addPayment.keterangan,
         });
-
-        // Get the index of the task being updated
-        let contractIndex = this.contracts.findIndex(t => t.id === contract.id);
-
-        // Reset the contracts array with the new data of the updated task
-        this.contracts = this.contracts.map((contract) => {
-          if (this.contracts.findIndex(t => t.id === contract.id) === contractIndex) {
-            return response.data;
-          }
-          return contract;
-        });
-
+        // Reset the title and description field values.
+        this.addPayment.pembayaran = '';
+        this.addPayment.nilai = '';
+        this.addPayment.tanggal_pembayaran = '';
+        this.addPayment.keterangan = '';
       } catch (error) {
-
-        // Log any error
+        // Log the error
         console.log(error);
       }
     },

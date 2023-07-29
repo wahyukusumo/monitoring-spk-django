@@ -13,22 +13,16 @@
             No. SPK
           </th>
           <th scope="col" class="px-6 py-3">
-            Vendor
+            Pembayaran
           </th>
           <th scope="col" class="px-6 py-3">
-            Awal SPK
-          </th>
-          <th scope="col" class="px-6 py-3">
-            Akhir SPK
-          </th>
-          <th scope="col" class="px-6 py-3">
-            Uraian
+            Tanggal Pembayaran
           </th>
           <th scope="col" class="px-6 py-3">
             Nilai
           </th>
           <th scope="col" class="px-6 py-3">
-            Basket
+            Keterangan
           </th>
           <th scope="col" class="px-6 py-3">
             Action
@@ -36,37 +30,32 @@
         </tr>
       </thead>
       <tbody>
-        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700" v-for="contract in contracts"
-          :key="contract.index">
+        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700" v-for="payment in payments"
+          :key="payment.index">
           <th scope="row" class="px-6 py-4 font-bold text-gray-900 whitespace-nowrap dark:text-white">
-            {{ contract.nomor_spk }}
+            {{ payment.nomor_spk.nomor_spk }}
           </th>
           <td class="px-6 py-4">
-            {{ contract.vendor }}
+            {{ payment.pembayaran }}
           </td>
           <td class="px-6 py-4">
-            {{ contract.tanggal_mulai }}
+            {{ payment.tanggal_pembayaran }}
           </td>
           <td class="px-6 py-4">
-            {{ contract.tanggal_akhir }}
+            Rp.{{ payment.nilai }}
           </td>
           <td class="px-6 py-4">
-            {{ contract.uraian }}
-          </td>
-          <td class="px-6 py-4">
-            Rp.{{ contract.nilai }}
-          </td>
-          <td class="px-6 py-4">
-            {{ contract.basket }}
+            {{ payment.keterangan }}
           </td>
           <td class="px-6 py-4">
             <!-- Add modal -->
             <FormModal modal-title="Add New Payment" button-text="Add Payment">
               <template v-slot:body>
-                <form v-on:submit.prevent="submitForm(contract)">
+                <form v-on:submit.prevent="submitForm(payment)">
+
                   <TextInput :label="'Nomor SPK'">
-                    <input type="text" name="no_spk" id="no_spk" v-model="contract.nomor_spk" :class="textInputClass"
-                      placeholder=" " required disabled />
+                    <input type="text" name="no_spk" id="no_spk" v-model="payment.nomor_spk_id" :class="textInputClass"
+                      placeholder=" " required />
                   </TextInput>
                   <TextInput :label="'Pembayaran'">
                     <input type="text" name="pembayaran" id="pembayaran" v-model="addPayment.pembayaran" :class="textInputClass"
@@ -98,12 +87,12 @@
                 </form>
               </template>
             </FormModal>
-
           </td>
         </tr>
       </tbody>
     </table>
   </div>
+
 </template>
 
 <script>
@@ -116,7 +105,7 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      contracts: [''],
+      payments: [''],
       addPayment: {
         pembayaran: '',
         nilai: undefined,
@@ -129,28 +118,31 @@ export default {
   methods: {
     async getData() {
       try {
-        // fetch contracts
+        // fetch payments
         const response = await axios.get(
-          'http://127.0.0.1:8000/api/pengadaan/'
+          'http://127.0.0.1:8000/api/keuangan/'
         );
-        // set the data returned as contracts
-        this.contracts = response.data;
+        // set the data returned as payments
+        this.payments = response.data;
       } catch (error) {
         // log the error
         console.log(error);
       }
     },
-    async submitForm(contract) {
+    async submitForm(payment) {
       try {
         // Send a POST request to the API
         const response = await axios.post('http://127.0.0.1:8000/api/keuangan/', {
-          nomor_spk_id: contract.id,
+          nomor_spk_id: this.payment.nomor_spk_id,
           pembayaran: this.addPayment.pembayaran,
           nilai: this.addPayment.nilai,
           tanggal_pembayaran: this.addPayment.tanggal_pembayaran,
           keterangan: this.addPayment.keterangan,
         });
+        // Append the returned data to the tasks array
+        this.payments.push(response.data);
         // Reset the title and description field values.
+        this.addPayment.nomor_spk_id = '';
         this.addPayment.pembayaran = '';
         this.addPayment.nilai = '';
         this.addPayment.tanggal_pembayaran = '';

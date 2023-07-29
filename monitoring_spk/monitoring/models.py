@@ -14,9 +14,12 @@ class Pengadaan(models.Model):
     status_approval = models.BooleanField(default=False, null=True)
     status_bayar = models.CharField(max_length=8, blank=True, null=True)
 
+    def __str__(self):
+        return self.nomor_spk
+
 
 class Keuangan(models.Model):
-    nomor_spk = models.ForeignKey(Pengadaan, on_delete=models.CASCADE)
+    nomor_spk = models.ForeignKey(Pengadaan, on_delete=models.CASCADE, null=True, blank=True)
     pembayaran = models.CharField(max_length=64)
     nilai = models.DecimalField(max_digits=15, decimal_places=2)
     tanggal_pembayaran = models.DateField()

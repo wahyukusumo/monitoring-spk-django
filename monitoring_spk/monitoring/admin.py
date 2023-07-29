@@ -4,11 +4,13 @@ from .models import Pengadaan, Keuangan, Amandemen, Pengawasan
 # Register your models here.
 class PengadaanAdmin(admin.ModelAdmin):
     list_display = ('nomor_spk', 'bagian', 'vendor', 'tanggal_mulai', 'tanggal_akhir', 'uraian', 'nilai', 'basket', 'status_approval', 'status_bayar')
+    search_fields =  ('nomor_spk', 'bagian', 'vendor', 'tanggal_mulai', 'tanggal_akhir', 'uraian', 'nilai', 'basket', 'status_approval', 'status_bayar')
     list_per_page = 20
 
 
 class KeuanganAdmin(admin.ModelAdmin):
     list_display = ('nomor_spk', 'pembayaran', 'nilai', 'tanggal_pembayaran', 'keterangan')
+    search_fields = ('nomor_spk__nomor_spk', )
     list_per_page = 20
 
 

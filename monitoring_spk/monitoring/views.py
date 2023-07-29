@@ -3,8 +3,8 @@ from django.db.models import Q
 from rest_framework.parsers import JSONParser
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse, JsonResponse
-from .serializers import PengadaanSerializer
-from .models import Pengadaan
+from .serializers import PengadaanSerializer, KeuanganSerializer, PengawasanSerializer
+from .models import Pengadaan, Keuangan, Pengawasan
 
 # Create your views here.
 
@@ -45,6 +45,38 @@ def pengadaan_detail(request, pk):
         pengadaan.delete()
         return HttpResponse(status=204)
 
+@csrf_exempt
+def keuangan(request):
+    if (request.method == 'GET'):
+        keuangan = Keuangan.objects.all()
+        serializers = KeuanganSerializer(keuangan, many=True)
+        return JsonResponse(serializers.data, safe=False)
+
+    elif (request.method == 'POST'):
+        data = JSONParser().parse(request)
+        serializers = KeuanganSerializer(data = data)
+        if (serializers.is_valid()):
+            serializers.save()
+            return JsonResponse(serializers.data, status=201)
+
+        return JsonResponse(serializers.errors, status=400)
+
+@csrf_exempt
+def pengawasan(request):
+    if (request.method == 'GET'):
+        pengawas = Pengawasan.objects.all()
+        serializers = PengawasanSerializer(pengawas, many=True)
+        return JsonResponse(serializers.data, safe=False)
+
+    elif (request.method == 'POST'):
+        data = JSONParser().parse(request)
+        serializers = PengawasanSerializer(data = data)
+        if (serializers.is_valid()):
+            serializers.save()
+            return JsonResponse(serializers.data, status=201)
+
+        return JsonResponse(serializers.errors, status=400)
+
 def search(request):
     get_q = request.GET.get('q')
     keywords = get_q.split()
@@ -62,3 +94,5 @@ def search(request):
     contract_list = query.distinct().order_by('-id')
 
     return JsonResponse(contract_list)
+
+

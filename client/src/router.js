@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Home from '@/views/Home.vue'
+import Dashboard from '@/views/Dashboard.vue'
 
 
 export default createRouter({
@@ -7,7 +7,7 @@ export default createRouter({
   routes: [
     {
       path: '/',
-      component: Home,
+      component: Dashboard,
     },
     {
       path: '/pengadaan',
@@ -20,6 +20,10 @@ export default createRouter({
     {
       path: '/keuangan',
       component: () => import('@/views/Keuangan.vue'),
+    },
+    {
+      path: '/pengawas',
+      component: () => import('@/views/Pengawas.vue'),
     },
     {
       path: '/data',

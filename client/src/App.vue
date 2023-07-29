@@ -34,19 +34,19 @@
           </SidebarList>
         </router-link>
 
-        <router-link to="/pengawas-jaringan">
+        <router-link to="pengawas">
           <SidebarList :name="'Pengawas Jaringan'">
             <i class="fa-solid fa-network-wired" :class="iconClass"></i>
           </SidebarList>
         </router-link>
 
-        <router-link to="transaksi-energi">
+        <router-link to="pengawas">
           <SidebarList :name="'Transaksi Energi'">
             <i class="fa-solid fa-bolt" :class="iconClass"></i>
           </SidebarList>
         </router-link>
 
-        <router-link to="pengawas-konstruksi">
+        <router-link to="pengawas">
           <SidebarList :name="'Pengawas Konstruksi'">
             <i class="fa-solid fa-helmet-safety" :class="iconClass"></i>
           </SidebarList>
