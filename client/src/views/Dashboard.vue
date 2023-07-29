@@ -43,17 +43,17 @@
         <tbody>
           <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-              {{ chartsData[3].datasets[1].label }}
+              {{ chartsData[3].datasets[0].label }}
             </th>
-            <td class="px-3 py-4" v-for="data in chartsData[3].datasets[1].data">
+            <td class="px-3 py-4" v-for="data in chartsData[3].datasets[0].data">
               Rp.{{ data }}
             </td>
           </tr>
           <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-              {{ chartsData[3].datasets[0].label }}
+              {{ chartsData[3].datasets[1].label }}
             </th>
-            <td class="px-3 py-4" v-for="data in chartsData[3].datasets[0].data">
+            <td class="px-3 py-4" v-for="data in chartsData[3].datasets[1].data">
               Rp.{{ data }}
             </td>
           </tr>
